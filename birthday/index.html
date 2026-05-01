@@ -1,0 +1,197 @@
+
+  <!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Manisha ❤️</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  text-align:center;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+/* intro */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+button{
+  padding:15px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#ff4d6d;
+  color:white;
+}
+
+/* main */
+#main{
+  display:none;
+  padding-top:30px;
+}
+
+h1{
+  font-size:3em;
+  color:#ff4d6d;
+}
+
+/* photo */
+img{
+  width:230px;
+  border-radius:50%;
+  border:5px solid white;
+  margin-top:20px;
+  box-shadow:0 0 30px pink;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{box-shadow:0 0 20px pink;}
+  to{box-shadow:0 0 50px hotpink;}
+}
+
+/* message */
+#message{
+  margin-top:20px;
+  font-size:1.3em;
+  width:80%;
+  margin:auto;
+}
+
+/* hearts */
+.heart{
+  position:absolute;
+  color:pink;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-10vh);}
+}
+
+/* canvas */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="intro">
+  <h2>🎁 A Special Surprise For You 🎁</h2>
+  <button onclick="start()">Open</button>
+</div>
+
+<div id="main">
+  <h1>🎉 Happy 23rd Birthday 🎉</h1>
+  <h2>Manisha Dash ❤️</h2>
+
+  <img src="manisha.jpg">
+
+  <div id="message"></div>
+</div>
+
+<audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3"></audio> <canvas id="canvas"></canvas>
+
+<script>
+function start(){
+  document.getElementById("intro").style.display="none";
+  document.getElementById("main").style.display="block";
+  document.getElementById("music").play();
+  typeText();
+  hearts();
+  confetti();
+  fireworks();
+}
+
+/* typing message */
+let text="You are the most beautiful part of my life 💖\nEvery moment with you feels magical ✨\nI am so lucky to have you ❤️\nHappy 23rd Birthday My Love 🎂";
+let i=0;
+function typeText(){
+  if(i<text.length){
+    document.getElementById("message").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeText,40);
+  }
+}
+
+/* hearts */
+function hearts(){
+  setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"%";
+    h.style.fontSize=(20+Math.random()*30)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  },300);
+}
+
+/* confetti */
+let canvas=document.getElementById("canvas");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pieces=[];
+for(let i=0;i<100;i++){
+  pieces.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*6+2,
+    d:Math.random()*100
+  });
+}
+
+function confetti(){
+  setInterval(()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let i=0;i<pieces.length;i++){
+      let p=pieces[i];
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle="white";
+      ctx.fill();
+      p.y+=2;
+      if(p.y>canvas.height) p.y=0;
+    }
+  },30);
+}
+
+/* fireworks */
+function fireworks(){
+  setInterval(()=>{
+    let x=Math.random()*canvas.width;
+    let y=Math.random()*canvas.height/2;
+
+    for(let i=0;i<30;i++){
+      ctx.beginPath();
+      ctx.arc(x+Math.random()*50,y+Math.random()*50,2,0,Math.PI*2);
+      ctx.fillStyle="yellow";
+      ctx.fill();
+    }
+  },800);
+}
+</script>
+
+</body>
+</html>
